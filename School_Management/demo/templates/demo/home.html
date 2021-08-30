@@ -1,0 +1,66 @@
+{% extends 'demo/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-5 setClass">
+    <div class="jumbotron">
+        <h1 style="text-align: center;">Welcome to School Management System</h1>
+      </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class=col-sm-3>
+                <h3 class="text-center alert alert-info">REGISTRATION</h3>
+                <form method = "POST" id ="Registration_form" data-teacher-url="{% url 'ajax_load_teachers' %}"class="post-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <br>
+                    <input class="btn float-right btn-outline-info col-lg-6" type=submit value="Save" />
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <h3 class="text-center alert alert-info">STUDENT DATA</h3>
+                <table class="table table-primary table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">School</th>
+                    <th scope="col">Teacher</th>
+                    <th scope="col">Student</th>
+                    <th scope="col">Registration Date</th>
+                    <th scope="col">Roll No.</th>
+                    <th scope="col">Documents</th>
+                    <th scope="col">UPDATE</th>
+                    <th scope="col">DELETE</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody id = "tbody">
+                {% for student in getAllData %}
+                <tr>
+                    <td>{{student.id}}</td>
+                    <td>{{student.School_Name.School_Name}}</td>
+                    <td>{{student.Teacher_Name.Teacher_Name}}</td>
+                    <td>{{student.Student_Name}}</td>
+                    <td>{{student.Student_Registration_Date}}</td>
+                    <td>{{student.Student_Roll_No}}</td>
+                    <td><a href="{{student.Student_File.url}}">Download file</a></td>
+                    <td><a class="btn btn-outline-warning btn-sm" href="{% url 'edit' student.id %}">UPDATE</a>
+                    </td>
+                    <td><a class="btn btn-outline-danger btn-sm" href="{% url 'delete' student.id %}">DELETE</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            </div>
+
+        </div>
+        
+    </div>
+</div>
+
+{% endblock %}

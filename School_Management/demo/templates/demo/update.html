@@ -1,0 +1,18 @@
+{% extends 'demo/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <div class="row">
+            <div class=col-sm-12>
+                <h3 class="text-center alert alert-info">UPDATE</h3>
+                <form method = "POST" class="post-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="studentname" id = "studentid">
+                    {{form|crispy}}
+                    <br>
+                    <input class="btn float-right btn-outline-info col-lg-6" type=submit value="Save" />
+                </form>
+            </div>
+
+{% endblock %}
